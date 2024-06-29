@@ -1,7 +1,7 @@
-from pyrogram import Client
-from aiogram.dispatcher.dispatcher import Dispatcher
-from dotenv import load_dotenv
 import os
+from pyrogram import Client
+from dotenv import load_dotenv
+from aiogram.dispatcher.dispatcher import Dispatcher
 
 load_dotenv('settings.env')
 

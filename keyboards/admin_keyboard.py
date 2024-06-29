@@ -1,12 +1,12 @@
+import data
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from FSM import Form
 
-activity = Form.account_activity
+activity = data.info.account_activity
 
 
 def create_keyboard() -> InlineKeyboardBuilder:
     builder = InlineKeyboardBuilder()
-    state = Form.admin_state
+    state = data.info.admin_menu
     buttons = [
                {'text': 'Переводчики', 'callback_data': 'translators'},
                {'text': 'Зарегестрировать', 'callback_data': 'register_translator'},

@@ -1,13 +1,12 @@
-import asyncio
-import logging
 import os
-import sys
+import asyncio
+import handlers
+from pyro import start
 from bot import get_bot
+from keyboards import buttons
 from dotenv import load_dotenv
 from aiogram import Dispatcher
-from pyro import start
-import handlers
-from keyboards import buttons
+from middlewares import LoggingMiddleware
 from aiogram.fsm.storage.memory import MemoryStorage
 
 load_dotenv('settings.env')
@@ -20,14 +19,11 @@ bot = get_bot(BOT_TOKEN)
 
 
 async def main() -> None:
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s|%(levelname)s|%(name)s|%(message)s",
-        datefmt="%Y-%m-%d|%H:%M:%S",
-        stream=sys.stdout)
 
     handlers.register(dp)
     buttons.register(dp)
+    dp.message.middleware(LoggingMiddleware())
+    dp.callback_query.middleware(LoggingMiddleware())
     await start(dp)
     await dp.start_polling(bot)
 

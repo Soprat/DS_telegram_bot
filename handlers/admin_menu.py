@@ -17,7 +17,7 @@ def create_text(user_name) -> str:
     return text
 
 
-@rt.message(Command('menu'), FSM.Form.admin)
+@rt.message(Command('menu'), data.Form.admin)
 async def send_message(message: Message):
     first_name = message.from_user.first_name if message.from_user.first_name else ''
     last_name = message.from_user.last_name if message.from_user.last_name else ''

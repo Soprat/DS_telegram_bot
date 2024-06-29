@@ -1,7 +1,7 @@
+import data
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-import FSM
 
-activity = FSM.Form.account_activity
+activity = data.info.account_activity
 
 
 def create_keyboard() -> InlineKeyboardBuilder:

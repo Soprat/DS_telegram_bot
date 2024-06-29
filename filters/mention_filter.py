@@ -1,6 +1,6 @@
+from typing import Any, Union
 from aiogram.types import Message
 from aiogram.enums import MessageEntityType
-from typing import Any, Union
 
 
 def mention_filter(message: Message) -> Union[bool, dict[str, Any]]:

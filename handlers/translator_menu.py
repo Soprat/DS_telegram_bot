@@ -1,32 +1,27 @@
+import data
 from handlers import *
 from filters import Command
-import keyboards.translator_keyboard as keyboard
 from database import get_translator_data
+import keyboards.translator_keyboard as keyboard
 
 rt = Router(name=__name__)
 
 
 def create_text(translator: str | int = None, account_name: str = None) -> str:
-    data = get_translator_data(translator)
-
-    text = f'''
-Переводчик: {account_name}
-
-Имя анкеты: {data[0]['girl_name']}
-Баланс за день: {data[0]['day_balance']}
-Баланс за месяц: {data[0]['month_balance']}
-
-Имя анкеты: {data[1]['girl_name']}
-Баланс за день: {data[1]['day_balance']}
-Баланс за месяц: {data[1]['month_balance']}
-'''
+    data_ = get_translator_data(translator)
+    print(data_)
+    text = f'''Переводчик: {account_name}\n\n'''
+    for info in data_:
+        text += f'''Имя анкеты: {info['girl_name']}
+Баланс за день: {info['day_balance']}
+Баланс за месяц: {info['month_balance']}\n\n'''
 
     return text
 
 
-@rt.message(Command('menu'), FSM.Form.translator)
+@rt.message(Command('menu'), data.Form.translator)
 async def send_message(message: Message):
-    await message.answer(text=create_text(translator=message.from_user.id,
+    await message.answer(text=create_text(translator=data.info.user_id,
                                           account_name=message.from_user.first_name),
                          reply_markup=keyboard.create_keyboard().as_markup())
 

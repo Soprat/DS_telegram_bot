@@ -1,28 +1,29 @@
-import FSM
-import logging
 import re
-from aiogram import (Dispatcher,
-                     Router,
+import data
+import logging
+from aiogram import (Router,
+                     Dispatcher,
                      )
 from aiogram.types import (Message,
                            MessageEntity,
                            )
-from handlers import (get_chat_id,
-                      translator_menu,
-                      admin_menu,
+from handlers import (admin_menu,
                       on_startup,
+                      get_chat_id,
+                      translator_menu,
                       )
 
-__all__ = ['FSM', 'logging', 're', 'Dispatcher',
+
+__all__ = ['data', 'logging', 're', 'Dispatcher',
            'Router', 'Message', 'MessageEntity']
 
 
 __handlers__ = [
     get_chat_id,
-    translator_menu,
     admin_menu,
     on_startup,
-]
+    translator_menu,
+    ]
 
 
 def register(dp: Dispatcher) -> None:
