@@ -1,7 +1,6 @@
+import pyro
 import database
-from pyro import client
 from keyboards.buttons import *
-from keyboards import admin_keyboard as keyboard
 
 rt = Router(name=__name__)
 
@@ -20,9 +19,8 @@ async def delete(message: Message, state: data.FSMContext):
             database.delete_translator(int(user_id))
     else:
         for entity in message.entities:
-            username = entity.extract_from(message.text)
-            user = await client.get_users(username)
-            database.delete_translator(user.id)
+            user_id = await pyro.get_id(message, entity)
+            database.delete_translator(user_id)
 
     await state.clear()
 

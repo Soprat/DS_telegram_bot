@@ -1,6 +1,6 @@
 import database
+import pyro
 from filters import *
-from pyro import client
 from keyboards.buttons import *
 
 rt = Router(name=__name__)
@@ -18,11 +18,10 @@ async def register_translator(query: CallbackQuery, state: data.FSMContext):
 async def wait_answer(message: Message):
     for entity in message.entities:
         if entity.type == 'mention':
-            username = entity.extract_from(message.text)
-            user = await client.get_users(username)
-            answer = database.register_translator(user.id, message.from_user.id)
+            user = await pyro.get_id(message, entity)
+            answer = database.register_translator(user, message.from_user.id)
             if answer is True:
-                await message.answer(f"Удачно добавлен переводчик {username}")
+                await message.answer(f"Удачно добавлен переводчик {entity.extract_from(message.text)}")
             elif answer is False:
                 await message.answer("Такой переводчик уже зарегистрирован")
             else:

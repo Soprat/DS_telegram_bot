@@ -1,6 +1,7 @@
 import os
 from pyrogram import Client
 from dotenv import load_dotenv
+from aiogram.types import MessageEntity, Message
 from aiogram.dispatcher.dispatcher import Dispatcher
 
 load_dotenv('settings.env')
@@ -19,6 +20,12 @@ async def startup() -> None:
 
 async def shutdown() -> None:
     await client.stop()
+
+
+async def get_id(message: Message, entity: MessageEntity) -> int:
+    username = entity.extract_from(message.text)
+    user = await client.get_users(username)
+    return user.id
 
 
 async def start(dp: Dispatcher) -> None:

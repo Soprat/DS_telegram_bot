@@ -22,7 +22,6 @@ def get_translator_data(translator) -> list[dict]:
                    f"INNER JOIN girls ON girls.name = translators.girl1_name OR girls.name = translators.girl2_name "
                    f"WHERE translators.name = '{translator}'")
     response = cursor.fetchall()
-    print(response)
     answer = []
     for data in response:
         answer.append({'girl_name': data[0], 'day_balance': data[1], 'month_balance': data[2]})
